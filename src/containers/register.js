@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Row, Col, Label, ModalBody, ModalFooter } from 'reactstrap';
-import { AvForm, AvGroup, AvInput, AvFeedback } from 'availity-reactstrap-validation';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 import axios from 'axios';
 
 export default class Register extends React.Component {
@@ -54,74 +54,27 @@ export default class Register extends React.Component {
     render() {
         return (
             <>
-                <ModalBody>
-                    <Row>
-                        <Col>
-                            <p>Register for an account</p>
-                        </Col>
-                    </Row>
-                    <AvForm onValidSubmit={this.handleSubmit} id="register">
-                        <Row>
-                            <Col>
-                                <AvGroup>
-                                    <Label>First Name</Label>
-                                    <AvInput
-                                        name="firstName"
-                                        type="text"
-                                        placeholder="First Name"
-                                        aria-describedby="inputGroupPrepend"
-                                        value={this.state.firstName} onChange={this.handleInput}
-                                        id="firstName"
-                                        required
-                                    />
-                                    <AvFeedback>
-                                        Please enter a first name.
-                                    </AvFeedback>
-                                </AvGroup>
-                            </Col>
-                            <Col>
-                                <AvGroup>
-                                    <Label>Last Name</Label>
-                                    <AvInput
-                                        name="lastName"
-                                        type="text"
-                                        placeholder="Last Name"
-                                        aria-describedby="inputGroupPrepend"
-                                        value={this.state.lastName} onChange={this.handleInput}
-                                        id="lastName"
-                                        required
-                                    />
-                                    <AvFeedback>
-                                        Please enter a last name.
-                                </AvFeedback>
-                                </AvGroup>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <AvGroup>
-                                    <Label>Email</Label>
-                                    <AvInput name="email" type="email" placeholder="Email Address" value={this.state.email} onChange={this.handleInput} id="email" required />
-                                    <AvFeedback>
-                                        Please provide a valid email address.
-                                </AvFeedback>
-                                </AvGroup>
-                            </Col>
-                            <Col>
-                                <AvGroup>
-                                    <Label>Password</Label>
-                                    <AvInput name="password" type="password" placeholder="Password" value={this.state.password} id="password" autoComplete="off" onChange={this.handleInput} required />
-                                    <AvFeedback>
-                                        Please provide a valid password.
-                                    </AvFeedback>
-                                </AvGroup>
-                            </Col>
-                        </Row>
-                    </AvForm>
-                </ModalBody>
-                <ModalFooter>
-                    <Button className="btn-lg" form="register" color="primary" type="submit">Register</Button>
-                </ModalFooter>
+                <h1>Register</h1>
+                <AvForm onValidSubmit={this.handleSubmit} id="register">
+                    <AvField name="firstName" label="First name: " value={this.state.firstName} onChange={this.handleInput} id="firstName" type="text" validate={{
+                        required: { value: true, errorMessage: 'Please enter your first name' },
+                        pattern: { value: '^[A-Za-z]+$', errorMessage: 'Your name must be composed only with letters' },
+                        minLength: { value: 3, errorMessage: 'Your name must be between 3 and 30 characters' },
+                        maxLength: { value: 30, errorMessage: 'Your name must be between 3 and 30 characters' }
+                    }} />
+                    <AvField name="lastName" label="Last name: " value={this.state.lastName} onChange={this.handleInput} id="lastName" type="text" validate={{
+                        required: { value: true, errorMessage: 'Please enter your last name' },
+                        pattern: { value: '^[A-Za-z]+$', errorMessage: 'Your name must be composed only with letters' },
+                        minLength: { value: 3, errorMessage: 'Your name must be between 3 and 30 characters' },
+                        maxLength: { value: 30, errorMessage: 'Your name must be between 3 and 30 characters' }
+                    }} />
+                    <AvField name="email" label="Email: " type="email" required />
+
+                    <AvField name="password" label="Password: " type="text" minLength={10} />
+                    <AvField name="confirmPassword" label="Confirm password: " type="text" validate={{ minLength: { value: 10 } }} />
+
+                    <Button color="primary" form="register" type="submit">Register</Button>
+                </AvForm>
             </>
         )
     }
