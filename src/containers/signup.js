@@ -107,11 +107,7 @@ export default class Signup extends React.Component {
                 </ModalBody>
                 <ModalFooter>
                     <Button color="primary" form="signup" type="submit">Sign up</Button>
-                    {
-                        (this.state.signupStatus)
-                            ? <Button color="primary" onClick={toggleLoginModal}>Log in to your new account</Button>
-                            : <Button color="light" onClick={toggleLoginModal}>Log in here if you already have an account</Button>
-                    }
+                    <Button color="light" onClick={toggleLoginModal}>Log in here if you already have an account</Button>
                 </ModalFooter>
             </Modal>
         )
