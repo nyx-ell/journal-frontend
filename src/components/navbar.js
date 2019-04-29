@@ -35,6 +35,10 @@ class myNavbar extends React.Component {
 
     }
 
+    handleLogout = () => {
+        localStorage.clear()
+    }
+
     render() {
         const { loginModal, signupModal } = this.state
         return (
@@ -56,11 +60,17 @@ class myNavbar extends React.Component {
                                 <NavLink onClick={this.toggleSignupModal}>Sign up</NavLink>
                                 <Signup signupModal={signupModal} toggleLoginModal={this.toggleLoginModal} toggleSignupModal={this.toggleSignupModal} />
                             </NavItem>
-
-                            <NavItem>
-                                <NavLink onClick={this.toggleLoginModal}>Log In</NavLink>
-                                <Login loginModal={loginModal} toggleLoginModal={this.toggleLoginModal} toggleSignupModal={this.toggleSignupModal} />
-                            </NavItem>
+                            {
+                                localStorage.getItem('token') ?
+                                    <NavItem>
+                                        <NavLink onClick={this.handleLogout}>Log out</NavLink>
+                                    </NavItem>
+                                    :
+                                    <NavItem>
+                                        <NavLink onClick={this.toggleLoginModal}>Log In</NavLink>
+                                        <Login loginModal={loginModal} toggleLoginModal={this.toggleLoginModal} toggleSignupModal={this.toggleSignupModal} />
+                                    </NavItem>
+                            }
                         </Nav>
                     </Collapse>
                 </Navbar>
