@@ -19,10 +19,12 @@ export default class Signup extends React.Component {
     reset = () => {
         if (this.state.signupStatus) {
             this.setState({
+                firstName: '',
+                lastName: '',
                 email: '',
                 password: '',
-                messageLogin: '',
-                statusLogin: false,
+                confirmPassword: '',
+                signupStatus: false,
             })
         }
     }
@@ -33,8 +35,7 @@ export default class Signup extends React.Component {
         })
     }
 
-    handleSubmit = (event) => {
-        event.preventDefault()
+    handleSubmit = () => {
         axios({
             // Send POST request with registration information
             method: 'POST',
@@ -96,8 +97,8 @@ export default class Signup extends React.Component {
                         }} />
                         <AvField name="password" label="Password: " value={this.state.password} onChange={this.handleInput} id="password" type="password" validate={{
                             required: { value: true, errorMessage: 'Please enter your password' },
-                            minLength: { value: 6, errorMessage: 'Your name must be between 6 and 20 characters' },
-                            maxLength: { value: 20, errorMessage: 'Your name must be between 6 and 20 characters' }
+                            minLength: { value: 6, errorMessage: 'Your password must be between 6 and 20 characters' },
+                            maxLength: { value: 20, errorMessage: 'Your password must be between 6 and 20 characters' }
                         }} />
                         <AvField name="confirmPassword" label="Confirm password: " value={this.state.confirmPassword} onChange={this.handleInput} id="confirmPassword" type="password" validate={{
                             required: { value: true, errorMessage: 'Please enter your password again' },

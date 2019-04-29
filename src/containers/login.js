@@ -1,5 +1,6 @@
 import React from "react";
-import { Form, Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 import axios from "axios";
 
 class Login extends React.Component {
@@ -8,112 +9,82 @@ class Login extends React.Component {
         this.state = {
             email: '',
             password: '',
-            messageLogin: '',
-            statusLogin: false,
-            loggedinUsername: '',
-            loggedinPic: '',
+            loginStatus: false,
         }
-    }
-
-    handleEmailChange = (event) => {
-        this.setState({
-            email: event.target.value
-        })
-    }
-
-    handlePasswordChange = (event) => {
-        this.setState({
-            password: event.target.value
-        })
     }
 
     reset = () => {
+        if (this.state.loginStatus) {
+            this.setState({
+                email: '',
+                password: '',
+                loginStatus: false,
+            })
+        }
+    }
+
+    handleInput = (event) => {
         this.setState({
-            email: '',
-            password: '',
-            messageLogin: '',
-            statusLogin: false,
+            [event.target.id]: event.target.value
         })
     }
 
-    loginNew = () => {
-        axios.post('https://insta.nextacademy.com/api/v1/login',
-            {
+    handleSubmit = () => {
+        axios({
+            // Send POST request with login information
+            method: 'POST',
+            url: 'http://localhost:5000/api/v1/sessions/',
+            data: {
                 email: this.state.email,
                 password: this.state.password,
-            }).then((response) => {
-                this.setState({
-                    messageLogin: 'Successfully logged in!',
-                    statusLogin: true,
-                    loggedinUsername: response.data.user.username,
-                    loggedinPic: response.data.user.profile_picture,
-                })
-                localStorage.setItem('jwt', response.data.auth_token)
-                this.props.loggedinCallback(this.state.loggedinUsername, this.state.loggedinPic)
-            }).catch((error) => {
-                this.setState({
-                    messageLogin: 'Some error occured. Please try again.',
-                    statusLogin: false,
-                })
+            }
+        })
+            .then((response) => {
+                if (response.data.status === "success") {
+                    this.setState({
+                        loginStatus: true,
+                    })
+
+                    // On success, display success message
+                    console.log('Log in successful!')
+
+                    // Save auth token and user details into local storage
+                    localStorage.setItem('token', response.data['auth_token']);
+                    localStorage.setItem('userId', response.data.user['id']);
+                    localStorage.setItem('firstName', response.data.user['first_name']);
+
+                    // Reset form
+                    this.reset()
+                } else {
+                    // On response but email validation failure, display error message
+                    console.log('Uh oh! Your email and password does not match.')
+                }
             })
-    }
-
-    logout = () => {
-        localStorage.removeItem('jwt')
-        this.props.toggleLoginModal()
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault()
-        this.loginNew()
-        if (this.state.statusLogin) {
-            this.reset()
-        }
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     render() {
         const { loginModal, toggleLoginModal, toggleSignupModal } = this.props
-        const { messageLogin, statusLogin } = this.state
         return (
             <Modal isOpen={loginModal} toggle={toggleLoginModal}>
-                <ModalHeader toggle={toggleLoginModal}>Log in to your NEXTagram account</ModalHeader>
+                <ModalHeader>Log in to your Journal</ModalHeader>
                 <ModalBody>
-                    <Form onSubmit={this.handleSubmit}>
-                        <FormGroup>
-                            <Label>Email</Label>
-                            <Input
-                                type="email"
-                                name="email"
-                                id="emailInput"
-                                placeholder="Email"
-                                value={this.state.email}
-                                onChange={this.handleEmailChange}
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label>Password</Label>
-                            <Input
-                                type="password"
-                                name="password"
-                                id="passwordInput"
-                                placeholder="Password"
-                                value={this.state.password}
-                                onChange={this.handlePasswordChange}
-                            />
-                        </FormGroup>
-                    </Form>
-                    <p>{messageLogin}</p>
+                    <AvForm onValidSubmit={this.handleSubmit} id="login">
+                        <AvField name="email" label="Email: " value={this.state.email} onChange={this.handleInput} id="email" type="email" validate={{
+                            required: { value: true, errorMessage: 'Please enter a valid email' }
+                        }} />
+                        <AvField name="password" label="Password: " value={this.state.password} onChange={this.handleInput} id="password" type="password" validate={{
+                            required: { value: true, errorMessage: 'Please enter your password' },
+                            minLength: { value: 6, errorMessage: 'Your password must be between 6 and 20 characters' },
+                            maxLength: { value: 20, errorMessage: 'Your password must be between 6 and 20 characters' }
+                        }} />
+                    </AvForm>
                 </ModalBody>
                 <ModalFooter>
-
+                    <Button color="primary" form="login" type="submit">Log in</Button>
                     <Button color="light" onClick={toggleSignupModal}>Sign up here if you don't have an account</Button>
-
-                    {
-                        (!statusLogin)
-                            ? <Button color="primary" onClick={this.handleSubmit}>Log in</Button>
-                            : <Button color="primary" onClick={this.logout}>Log out</Button>
-                    }
-
                 </ModalFooter>
             </Modal>
 
