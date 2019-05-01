@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -30,4 +30,31 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+.navbar-brand {
+  margin-left: 1rem;
+}
+
+#home-container {
+  min-width: 100%;
+}
+
+#home-bg {
+  max-height: 95vh;
+}
+
+#home-text {
+  bottom: 0;
+  left: 75%;
+  right: 5%;
+  font-size: 50px;
+  text-align: right;
+  color: white;
+}
+
+.btn.btn-light {
+  border: 0;
+  color: #6c757d;
+  background-color: white;
 }
