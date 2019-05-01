@@ -1,7 +1,8 @@
 import React from 'react';
+import axios from 'axios';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
-import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 export default class Signup extends React.Component {
     constructor(props) {
@@ -16,23 +17,17 @@ export default class Signup extends React.Component {
         }
     }
 
-    reset = () => {
-        if (this.state.signupStatus) {
-            this.setState({
-                firstName: '',
-                lastName: '',
-                email: '',
-                password: '',
-                confirmPassword: '',
-                signupStatus: false,
-            })
-        }
-    }
-
     handleInput = (event) => {
         this.setState({
             [event.target.id]: event.target.value
         })
+    }
+
+    handleRedirect = () => {
+        if (this.state.signupStatus) {
+            console.log('redirect called')
+            return <Redirect to="/journals/" />
+        }
     }
 
     handleSubmit = () => {
@@ -60,12 +55,9 @@ export default class Signup extends React.Component {
                     localStorage.setItem('token', response.data['auth_token']);
                     localStorage.setItem('userId', response.data.user['id']);
                     localStorage.setItem('firstName', response.data.user['first_name']);
-
-                    // Reset form
-                    this.reset()
                 } else {
                     // On response but email validation failure, display error message
-                    console.log('Uh oh! We already have an account with that email.')
+                    console.log('An account has already been registered with that email.')
                 }
             })
             .catch(error => {
@@ -107,9 +99,10 @@ export default class Signup extends React.Component {
                     </AvForm>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" form="signup" type="submit">Sign up</Button>
                     <Button color="light" onClick={toggleLoginModal}>Log in here if you already have an account</Button>
+                    <Button outline color="secondary" form="signup" type="submit">Sign up</Button>
                 </ModalFooter>
+                {this.handleRedirect()}
             </Modal>
         )
     }

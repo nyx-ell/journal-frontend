@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import { AvForm, AvField } from 'availity-reactstrap-validation';
+import { Redirect } from 'react-router-dom';
 import axios from "axios";
 
 class Login extends React.Component {
@@ -29,6 +30,13 @@ class Login extends React.Component {
         })
     }
 
+    handleRedirect = () => {
+        if (this.state.loginStatus) {
+            console.log('redirect called')
+            return <Redirect to="/journals/" push />
+        }
+    }
+
     handleSubmit = () => {
         axios({
             // Send POST request with login information
@@ -54,7 +62,8 @@ class Login extends React.Component {
                     localStorage.setItem('firstName', response.data.user['first_name']);
 
                     // Reset form
-                    this.reset()
+                    this.props.toggleLoginModal()
+
                 } else {
                     // On response but email validation failure, display error message
                     console.log('Uh oh! Your email and password does not match.')
@@ -83,8 +92,8 @@ class Login extends React.Component {
                     </AvForm>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" form="login" type="submit">Log in</Button>
                     <Button color="light" onClick={toggleSignupModal}>Sign up here if you don't have an account</Button>
+                    <Button outline color="secondary" form="login" type="submit" onClick={this.handleRedirect.bind(this)}>Log in</Button>
                 </ModalFooter>
             </Modal>
 
