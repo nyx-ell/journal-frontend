@@ -7,8 +7,6 @@ import Navbar from './containers/navbar';
 import JournalEntry from './containers/JournalEntry';
 import Homepage from './pages/Homepage'
 
-import recognizeMic from 'watson-speech/speech-to-text/recognize-microphone';
-
 class App extends React.Component {
   render() {
     return (
@@ -17,7 +15,7 @@ class App extends React.Component {
         <Route path="/" exact component={Homepage} />
         <Route path="/journals" exact component={UserPage} />
         <Route path="/journals/new" component={NewJournal} />
-        <Route path="/journals/:id" component={JournalEntry} />
+        <Route path="/journals/:id(\d+)" component={JournalEntry} />
       </>
 
     );
