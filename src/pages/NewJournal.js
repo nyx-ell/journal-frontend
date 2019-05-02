@@ -9,6 +9,7 @@ class NewJournal extends React.Component {
         this.state = {
             title: '',
             content: '',
+            user_file: null,
             submitStatus: false,
         };
     }
@@ -18,6 +19,7 @@ class NewJournal extends React.Component {
             this.setState({
                 title: '',
                 content: '',
+                user_file: null,
                 submitStatus: false,
             })
         }
@@ -29,6 +31,19 @@ class NewJournal extends React.Component {
         })
     }
 
+    handleUpload = (event) => {
+        this.setState({
+            user_file: event.target.files[0]
+        });
+    }
+
+    submitUpload = (event) => {
+        event.preventDefault();
+        const data = new FormData();
+        data.append('user_file', this.state.user_file[0]);
+        console.log('user file is', this.state.user_file);
+    }
+
     handleSubmit = () => {
         axios({
             method: 'POST',
@@ -37,6 +52,7 @@ class NewJournal extends React.Component {
                 user_id: localStorage.getItem('userId'),
                 title: this.state.title,
                 content: this.state.content,
+                user_file: this.state.user_file
             }
         })
             .then((response) => {
@@ -63,25 +79,23 @@ class NewJournal extends React.Component {
 
     render() {
         return (
-            <AvForm onValidSubmit={this.handleSubmit} id="journal">
-                <AvField name="title" label="Title: " value={this.state.title} onChange={this.handleInput} id="title" type="text" validate={{
-                    required: { value: true, errorMessage: 'Please enter a title' },
-                    maxLength: { value: 255, errorMessage: 'Your title cannot exceed 255 characters' }
-                }} />
-                <textarea rows="4" cols="50" maxlength="50" placeholder="Enter text here" value={this.state.content} onChange={this.handleInput} id="content"></textarea>
+            <>
+                <AvForm onValidSubmit={this.handleSubmit} id="journal">
+                    <AvField name="title" label="Title: " value={this.state.title} onChange={this.handleInput} id="title" type="text" validate={{
+                        required: { value: true, errorMessage: 'Please enter a title' },
+                        maxLength: { value: 255, errorMessage: 'Your title cannot exceed 255 characters' }
+                    }} />
 
-                <Button color="primary" form="journal" type="submit">Submit</Button>
-            </AvForm>
-            // <form onSubmit={this.handleSubmit}>
-            //     <label>
-            //         Title:
-            //         <input value={this.state.title} onChange={this.handleInput} type="text" name="title" />
-            //     </label>
-            //     <label>
-            //         <textarea value={this.state.content} onChange={this.handleInput} name="content" />
-            //     </label>
-            //     <input type="submit" value="Submit" />
-            // </form>
+                    <textarea rows="4" cols="50" maxlength="50" placeholder="Enter text here" value={this.state.content} onChange={this.handleInput} id="content"></textarea><br />
+                    <form enctype="multipart/form-data" >
+                        <label for="user_file">Upload or change profile picture</label> <br />
+                        <input type="file" id="user_file" onChange={this.handleUpload} />
+                        <button type="submit" onClick={this.submitUpload}>Upload</button><br />
+                    </form>
+
+                    <Button color="primary" form="journal" type="submit">Submit</Button>
+                </AvForm>
+            </>
         );
     }
 }
