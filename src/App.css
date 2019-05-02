@@ -30,7 +30,7 @@
   background-color: white;
 }
 
-#journal {
+#journal, #update {
   padding: 1rem;
 }
 
@@ -44,4 +44,15 @@
 
 #upload-button {
   margin-left: 10px;
+}
+
+#delete-button {
+  margin-right: 10px;
+}
+
+#created-at, #updated-at {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.8rem;
+  text-align: right;
 }

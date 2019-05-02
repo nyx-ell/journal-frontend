@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Button } from 'reactstrap';
 
 export default class JournalEntry extends React.Component {
@@ -103,19 +104,20 @@ export default class JournalEntry extends React.Component {
         const { id, created_at, updated_at, user_id, title, content } = this.state
         return (
             <>
-                <form id="update" onSubmit={this.handleUpdate}>
-                    <label>Title:</label>
-                    <input type="text" value={title} onChange={this.handleInput} id="title" placeholder={title} />
-                    {/* <input type="submit" value="Submit" /> */}
+                <AvForm onValidSubmit={this.handleUpdate} id="update">
+                    <AvField placeholder={title} name="title" value={title} onChange={this.handleInput} id="title" type="text" validate={{
+                        required: { value: true, errorMessage: 'Please give your journal a title' },
+                        maxLength: { value: 255, errorMessage: 'Your title cannot exceed 255 characters' }
+                    }} />
 
-                    <label>Content:</label>
-                    <input type="text" value={content} onChange={this.handleInput} id="content" placeholder={content} />
-                </form>
+                    <textarea placeholder={content} name="content" value={content} onChange={this.handleInput} id="content" type="text" className="form-control"></textarea><br />
 
-                <h1>{title}</h1>
-                <h5>{content}</h5>
-                <Button form="update" type="submit">Save</Button>
-                <Button onClick={this.handleDestroy}>Delete</Button>
+                    <p id="created-at">Created at: {created_at}</p>
+                    <p id="updated-at">Updated at: {updated_at}</p>
+                    <br /><br />
+                    <Button light color="secondary" form="update" type="submit" className="float-right">Save your changes</Button>
+                    <Button outline color="secondary" onClick={this.handleDestroy} id="delete-button" className="float-right">Delete</Button>
+                </AvForm>
             </>
         )
     }

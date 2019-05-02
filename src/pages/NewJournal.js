@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { AvForm, AvField, Form } from 'availity-reactstrap-validation';
+import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Button } from 'reactstrap';
 
 class NewJournal extends React.Component {
@@ -77,16 +77,17 @@ class NewJournal extends React.Component {
     }
 
     render() {
-        const time = Date.now()
+        const { title, content } = this.state
         return (
             <>
                 <AvForm onValidSubmit={this.handleSubmit} id="journal">
-                    <AvField placeholder="Title" name="title" value={this.state.title} onChange={this.handleInput} id="title" type="text" validate={{
+                    <AvField placeholder="Title" name="title" value={title} onChange={this.handleInput} id="title" type="text" validate={{
                         required: { value: true, errorMessage: 'Please give your journal a title' },
                         maxLength: { value: 255, errorMessage: 'Your title cannot exceed 255 characters' }
                     }} />
 
-                    <textarea placeholder="Write away..." name="content" value={this.state.content} onChange={this.handleInput} id="content" type="text" className="form-control"></textarea><br />
+                    <textarea placeholder="Write away..." name="content" value={content} onChange={this.handleInput} id="content" type="text" className="form-control"></textarea><br />
+
                     <form id="upload-form" encType="multipart/form-data" >
                         <div class="input-group col-sm-6">
                             <div class="custom-file">
