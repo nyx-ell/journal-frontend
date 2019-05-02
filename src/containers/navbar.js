@@ -45,7 +45,7 @@ class myNavbar extends React.Component {
         const { loginModal, signupModal } = this.state
         return (
             <div>
-                <Navbar className="navbar-expand-md navbar-nav navbar-light navbar-brand">
+                <Navbar className="navbar-expand-md navbar-nav navbar-light navbar-brand" id="navbar">
                     <NavbarBrand>JOURNAL</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
