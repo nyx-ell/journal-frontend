@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Alert, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Redirect } from 'react-router-dom';
 
@@ -25,8 +25,7 @@ export default class Signup extends React.Component {
 
     handleRedirect = () => {
         if (this.state.signupStatus) {
-            console.log('redirect called')
-            return <Redirect to="/journals/" />
+            return (<Redirect to="/journals/" />)
         }
     }
 
@@ -49,7 +48,7 @@ export default class Signup extends React.Component {
                     })
 
                     // On success, display success message
-                    console.log('Registration successful!')
+                    return (<Alert color="success">Registration was successful!</Alert>)
 
                     // Save auth token and user details into local storage
                     localStorage.setItem('token', response.data['auth_token']);
@@ -57,11 +56,11 @@ export default class Signup extends React.Component {
                     localStorage.setItem('firstName', response.data.user['first_name']);
                 } else {
                     // On response but email validation failure, display error message
-                    console.log('An account has already been registered with that email.')
+                    return (<Alert color="danger">An account has already been registered with that email.</Alert>)
                 }
             })
             .catch(error => {
-                console.log(error);
+                return (<Alert>{error}</Alert>);
             })
     }
 
