@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { AvForm, AvField } from 'availity-reactstrap-validation';
+import { AvForm, AvField, Form } from 'availity-reactstrap-validation';
 import { Button } from 'reactstrap';
 
 class NewJournal extends React.Component {
@@ -76,24 +76,29 @@ class NewJournal extends React.Component {
             })
     }
 
-
     render() {
+        const time = Date.now()
         return (
             <>
                 <AvForm onValidSubmit={this.handleSubmit} id="journal">
-                    <AvField name="title" label="Title: " value={this.state.title} onChange={this.handleInput} id="title" type="text" validate={{
-                        required: { value: true, errorMessage: 'Please enter a title' },
+                    <AvField placeholder="Title" name="title" value={this.state.title} onChange={this.handleInput} id="title" type="text" validate={{
+                        required: { value: true, errorMessage: 'Please give your journal a title' },
                         maxLength: { value: 255, errorMessage: 'Your title cannot exceed 255 characters' }
                     }} />
 
-                    <textarea rows="4" cols="50" maxlength="50" placeholder="Enter text here" value={this.state.content} onChange={this.handleInput} id="content"></textarea><br />
-                    <form enctype="multipart/form-data" >
-                        <label for="user_file">Upload or change profile picture</label> <br />
-                        <input type="file" id="user_file" onChange={this.handleUpload} />
-                        <button type="submit" onClick={this.submitUpload}>Upload</button><br />
+                    <textarea placeholder="Write away..." name="content" value={this.state.content} onChange={this.handleInput} id="content" type="text" className="form-control"></textarea><br />
+                    <form id="upload-form" encType="multipart/form-data" >
+                        <div class="input-group col-sm-6">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="user_file"
+                                    aria-describedby="inputGroupFileAddon01" onChange={this.handleUpload} />
+                                <label class="custom-file-label" for="user_file">Choose an image</label>
+                            </div>
+                            <Button outline color="secondary" type="submit" onClick={this.submitUpload} id="upload-button">Upload</Button><br />
+                        </div>
                     </form>
-
-                    <Button color="primary" form="journal" type="submit">Submit</Button>
+                    <br /><br />
+                    <Button light color="secondary" form="journal" type="submit" className="float-right">Create new journal entry</Button>
                 </AvForm>
             </>
         );
