@@ -34,7 +34,7 @@ class UserPage extends React.Component {
         return (
             <>
                 <div>
-                    <Link to="/journals/new">New Journal Entry</Link>
+                    <Link to="/journals/new" className="btn btn-secondary" id="new-journal-button">Write a new journal</Link>
                 </div>
                 <JournalTable />
             </>

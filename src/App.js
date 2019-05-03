@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import UserPage from './pages/UserPage';
 import NewJournal from './pages/NewJournal';
 import Navbar from './containers/navbar';
-import JournalEntry from './containers/JournalEntry';
+import UpdateJournal from './pages/UpdateJournal';
 import Homepage from './pages/Homepage'
 
 class App extends React.Component {
@@ -15,7 +15,7 @@ class App extends React.Component {
         <Route path="/" exact component={Homepage} />
         <Route path="/journals" exact component={UserPage} />
         <Route path="/journals/new" component={NewJournal} />
-        <Route path="/journals/:id(\d+)" component={JournalEntry} />
+        <Route path="/journals/:id(\d+)" component={UpdateJournal} />
       </>
 
     );
