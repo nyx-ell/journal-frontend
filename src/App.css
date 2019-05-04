@@ -61,18 +61,27 @@
   margin: 1rem;
 }
 
-.journal-box {
-
+#journal-grid {
+  margin-right: 0;
+  margin-left: 0;
 }
 
-.journal-image {
-
+.img-thumbnail.journal-img {
+  height: 10rem;
+  min-width: 100%;
 }
 
-.journal-title {
-
+a {
+  color: black !important;
+  float: right;
 }
 
 .journal-created-at {
+  color: #6c757d;
+  font-size: 0.8rem;
+  float: right;
+}
 
+#welcome-message {
+  margin: 1rem;
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-import { Redirect } from 'react-router-dom';
 import Login from "../containers/login.js";
 import Signup from "../containers/signup.js";
 
@@ -12,6 +11,7 @@ class myNavbar extends React.Component {
             isOpen: false,
             loginModal: false,
             signupModal: false,
+            isLoggedIn: false,
         };
     }
 
@@ -33,25 +33,44 @@ class myNavbar extends React.Component {
             signupModal: !this.state.signupModal,
             loginModal: false,
         });
-
     }
 
     handleLogout = () => {
         localStorage.clear()
-        return <Redirect to="/" />
+        this.setState({
+            isLoggedIn: false,
+        })
+        window.location.href = 'http://localhost:3000/';
+    }
+
+    componentDidMount() {
+        if (localStorage.getItem('token') !== null) {
+            this.setState({
+                isLoggedIn: true,
+            })
+        }
     }
 
     render() {
-        const { loginModal, signupModal } = this.state
+        const { isOpen, loginModal, signupModal, isLoggedIn } = this.state
         return (
             <div>
                 <Navbar className="navbar-expand-md navbar-nav navbar-light navbar-brand" id="navbar">
-                    <NavbarBrand>JOURNAL</NavbarBrand>
+                    <NavbarBrand>JOURNAL NYX</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
-                    <Collapse isOpen={this.state.isOpen} navbar>
+                    <Collapse isOpen={isOpen} navbar>
                         <Nav navbar className="ml-auto">
                             {
-                                (localStorage.getItem('token') !== '') ?
+                                (isLoggedIn) ?
+                                    <>
+                                        <NavItem>
+                                            <NavLink href="/journals/">Home</NavLink>
+                                        </NavItem>
+                                        <NavItem>
+                                            <NavLink onClick={this.handleLogout}>Log out</NavLink>
+                                        </NavItem>
+                                    </>
+                                    :
                                     <>
                                         <NavItem>
                                             <NavLink onClick={this.toggleSignupModal}>Sign up</NavLink>
@@ -60,15 +79,6 @@ class myNavbar extends React.Component {
                                         <NavItem>
                                             <NavLink onClick={this.toggleLoginModal}>Log In</NavLink>
                                             <Login loginModal={loginModal} toggleLoginModal={this.toggleLoginModal} toggleSignupModal={this.toggleSignupModal} />
-                                        </NavItem>
-                                    </>
-                                    :
-                                    <>
-                                        <NavItem>
-                                            <NavLink href="/journals/">Home</NavLink>
-                                        </NavItem>
-                                        <NavItem>
-                                            <NavLink onClick={this.handleLogout} href="/">Log out</NavLink>
                                         </NavItem>
                                     </>
                             }

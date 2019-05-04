@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import { Container, Col, Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import axios from 'axios'
 
 export default class JournalTable extends React.Component {
@@ -38,21 +38,15 @@ export default class JournalTable extends React.Component {
 
     render() {
         return (
-            <>
-                <Container>
-                    <Row>
-                        {this.state.journals.map((journal) => (
-                            <Col key={journal.id} className="col-sm-4 d-inline journal-box">
-                                <img src="/Users/nicolelin/journal-frontend/src/images/bg-1.jpg" alt="" className="img-thumbnail journal-img" />
-                                <p className="journal-title"><Link to={"/journals/" + journal.id}>{journal.title}</Link></p>
-                                <p className="journal-created-at">{journal.created_at}</p>
-                            </Col>
-                        ))}
-                    </Row>
-
-                </Container>
-
-            </>
+            <Row id="journal-grid">
+                {this.state.journals.map((journal) => (
+                    <Col key={journal.id} className="col-sm-3 d-inline">
+                        <img src={'https://s3.amazonaws.com/journal-nyx/' + journal.image_path} alt="" className="img-thumbnail journal-img" />
+                        <p><Link to={"/journals/" + journal.id}>{journal.title}</Link></p>
+                        <p className="journal-created-at">{journal.created_at}</p>
+                    </Col>
+                ))}
+            </Row>
         )
     }
 }
