@@ -26,9 +26,6 @@ export default class Signup extends React.Component {
         axios({
             method: 'POST',
             url: 'https://journal-nyx.herokuapp.com/api/v1/users/new',
-            'headers': {
-                'Access-Control-Allow-Origin': '*'
-            },
             data: {
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,

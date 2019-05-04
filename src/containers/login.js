@@ -23,9 +23,6 @@ class Login extends React.Component {
         axios({
             method: 'POST',
             url: 'https://journal-nyx.herokuapp.com/api/v1/sessions/',
-            'headers': {
-                'Access-Control-Allow-Origin': '*'
-            },
             data: {
                 email: this.state.email,
                 password: this.state.password,

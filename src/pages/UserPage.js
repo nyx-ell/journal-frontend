@@ -10,7 +10,6 @@ class UserPage extends React.Component {
             method: 'GET',
             url: 'https://journal-nyx.herokuapp.com/api/v1/journals/',
             'headers': {
-                'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`
             },
