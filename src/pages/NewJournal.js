@@ -9,9 +9,12 @@ class NewJournal extends React.Component {
         this.state = {
             title: '',
             content: '',
-            user_file: null,
+            file: null,
+            url: null,
             submitStatus: false,
         };
+        this.handleInput = this.handleInput.bind(this)
+        this.handleUpload = this.handleUpload.bind(this)
     }
 
     reset = () => {
@@ -19,7 +22,8 @@ class NewJournal extends React.Component {
             this.setState({
                 title: '',
                 content: '',
-                user_file: null,
+                file: null,
+                url: null,
                 submitStatus: false,
             })
         }
@@ -33,15 +37,17 @@ class NewJournal extends React.Component {
 
     handleUpload = (event) => {
         this.setState({
-            user_file: event.target.files[0]
+            file: event.target.files[0],
+            url: URL.createObjectURL(event.target.files[0]),
         });
+        console.log(this.state.file)
     }
 
     submitUpload = (event) => {
         event.preventDefault();
         const data = new FormData();
-        data.append('user_file', this.state.user_file[0]);
-        console.log('user file is', this.state.user_file);
+        data.append('file', this.state.file);
+        console.log('user file is', this.state.file);
     }
 
     handleSubmit = () => {
@@ -52,7 +58,7 @@ class NewJournal extends React.Component {
                 user_id: localStorage.getItem('userId'),
                 title: this.state.title,
                 content: this.state.content,
-                user_file: this.state.user_file
+                file: this.state.file
             }
         })
             .then((response) => {
@@ -77,7 +83,7 @@ class NewJournal extends React.Component {
     }
 
     render() {
-        const { title, content } = this.state
+        const { title, content, file } = this.state
         return (
             <>
                 <AvForm onValidSubmit={this.handleSubmit} id="journal">
@@ -88,16 +94,16 @@ class NewJournal extends React.Component {
 
                     <textarea placeholder="Write away..." name="content" value={content} onChange={this.handleInput} id="content" type="text" className="form-control"></textarea><br />
 
-                    <form id="upload-form" encType="multipart/form-data" >
-                        <div class="input-group col-sm-6">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="user_file"
-                                    aria-describedby="inputGroupFileAddon01" onChange={this.handleUpload} />
-                                <label class="custom-file-label" for="user_file">Choose an image</label>
+                    <form id="upload-form">
+                        <div className="input-group col-sm-6">
+                            <div className="custom-file">
+                                <input type="file" className="custom-file-input" id="file" onChange={this.handleUpload} placeholder="text2" />
+                                <label className="custom-file-label" for="file">{(file) ? file.name : "Choose an image"}</label>
                             </div>
                             <Button outline color="secondary" type="submit" onClick={this.submitUpload} id="upload-button">Upload</Button><br />
                         </div>
-                    </form>
+                    </form> <br />
+                    <img src={this.state.url} className="img-thumbnail" />
                     <br /><br />
                     <Button light color="secondary" form="journal" type="submit" className="float-right">Create new journal entry</Button>
                 </AvForm>
