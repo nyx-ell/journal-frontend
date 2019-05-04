@@ -25,7 +25,7 @@ export default class Signup extends React.Component {
     handleSubmit = () => {
         axios({
             method: 'POST',
-            url: 'http://localhost:5000/api/v1/users/new',
+            url: 'https://journal-nyx.herokuapp.com/api/v1/users/new',
             'headers': {
                 'Access-Control-Allow-Origin': '*'
             },

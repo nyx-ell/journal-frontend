@@ -38,7 +38,7 @@ class NewJournal extends React.Component {
         fd.append('file', file, file.name)
 
         const token = localStorage.getItem('token')
-        axios.post('http://localhost:5000/api/v1/journals/new', fd, {
+        axios.post('https://journal-nyx.herokuapp.com/api/v1/journals/new', fd, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

@@ -8,7 +8,7 @@ class UserPage extends React.Component {
         const token = localStorage.getItem('token')
         axios({
             method: 'GET',
-            url: 'http://localhost:5000/api/v1/journals/',
+            url: 'https://journal-nyx.herokuapp.com/api/v1/journals/',
             'headers': {
                 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'application/json',

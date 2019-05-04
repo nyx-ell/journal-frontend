@@ -22,7 +22,7 @@ class Login extends React.Component {
     handleSubmit = () => {
         axios({
             method: 'POST',
-            url: 'http://localhost:5000/api/v1/sessions/',
+            url: 'https://journal-nyx.herokuapp.com/api/v1/sessions/',
             'headers': {
                 'Access-Control-Allow-Origin': '*'
             },
