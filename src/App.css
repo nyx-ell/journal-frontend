@@ -1,0 +1,87 @@
+#navbar {
+  box-shadow: 0px 2px 8px 0 rgba(0, 0, 0, 0.1),
+  0 6px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  margin-left: 1rem;
+}
+
+#home-container {
+  min-width: 100%;
+}
+
+#home-bg {
+  max-height: 95vh;
+}
+
+#home-text {
+  bottom: 0;
+  left: 75%;
+  right: 5%;
+  font-size: 50px;
+  text-align: right;
+  color: white;
+}
+
+.btn.btn-light {
+  border: 0;
+  color: #6c757d;
+  background-color: white;
+}
+
+#journal, #update {
+  padding: 1rem;
+}
+
+#content {
+  height: 50vh;
+}
+
+.input-group.col-sm-6 {
+  padding: 0;
+}
+
+#upload-button {
+  margin-left: 10px;
+}
+
+#delete-button {
+  margin-right: 10px;
+}
+
+#created-at, #updated-at {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+#new-journal-button {
+  margin: 1rem;
+}
+
+#journal-grid {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.img-thumbnail.journal-img {
+  height: 10rem;
+  min-width: 100%;
+}
+
+a {
+  color: black !important;
+  float: right;
+}
+
+.journal-created-at {
+  color: #6c757d;
+  font-size: 0.8rem;
+  float: right;
+}
+
+#welcome-message {
+  margin: 1rem;
+}
