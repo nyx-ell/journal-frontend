@@ -23,9 +23,7 @@ export default class Signup extends React.Component {
     }
 
     handleSubmit = () => {
-        axios({
-            method: 'POST',
-            url: 'https://journal-nyx.herokuapp.com/api/v1/users/new',
+        axios.post('https://journal-nyx.herokuapp.com/api/v1/users/new', {
             data: {
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,

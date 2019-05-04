@@ -20,9 +20,7 @@ class Login extends React.Component {
     }
 
     handleSubmit = () => {
-        axios({
-            method: 'POST',
-            url: 'https://journal-nyx.herokuapp.com/api/v1/sessions/',
+        axios.post('https://journal-nyx.herokuapp.com/api/v1/sessions/', {
             data: {
                 email: this.state.email,
                 password: this.state.password,
