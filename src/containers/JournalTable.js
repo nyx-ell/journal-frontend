@@ -15,7 +15,7 @@ export default class JournalTable extends React.Component {
         const token = localStorage.getItem('token')
         axios({
             method: 'GET',
-            url: 'http://localhost:5000/api/v1/journals/',
+            url: 'https://journal-nyx.herokuapp.com/api/v1/journals/',
             'headers': {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`

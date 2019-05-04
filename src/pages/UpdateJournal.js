@@ -46,7 +46,7 @@ export default class JournalEntry extends React.Component {
         const { match: { params } } = this.props;
         const id = params.id
         const token = localStorage.getItem('token')
-        axios.post(`http://localhost:5000/api/v1/journals/${id}`, fd, {
+        axios.post(`https://journal-nyx.herokuapp.com/api/v1/journals/${id}`, fd, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -68,7 +68,7 @@ export default class JournalEntry extends React.Component {
         const token = localStorage.getItem('token')
         axios({
             method: 'POST',
-            url: `http://localhost:5000/api/v1/journals/${id}/delete`,
+            url: `https://journal-nyx.herokuapp.com/api/v1/journals/${id}/delete`,
             'headers': {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`
@@ -91,7 +91,7 @@ export default class JournalEntry extends React.Component {
 
         axios({
             method: 'GET',
-            url: `http://localhost:5000/api/v1/journals/${id}`,
+            url: `https://journal-nyx.herokuapp.com/api/v1/journals/${id}`,
             'headers': {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`
