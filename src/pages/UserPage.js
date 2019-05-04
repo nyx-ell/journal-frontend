@@ -6,12 +6,8 @@ import JournalTable from '../containers/JournalTable.js';
 class UserPage extends React.Component {
     componentDidMount() {
         const token = localStorage.getItem('token')
-        axios({
-            method: 'GET',
-            url: 'https://journal-nyx.herokuapp.com/api/v1/journals/',
-            'headers': {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json',
+        axios.get('https://journal-nyx.herokuapp.com/api/v1/journals/', {
+            headers: {
                 Authorization: `Bearer ${token}`
             },
             data: {

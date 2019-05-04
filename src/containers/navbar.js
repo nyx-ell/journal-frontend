@@ -40,7 +40,7 @@ class myNavbar extends React.Component {
         this.setState({
             isLoggedIn: false,
         })
-        window.location.href = 'https://journal-nyx.herokuapp.com/api/v1/';
+        window.location.href = 'https://journal-nyx.herokuapp.com/';
     }
 
     componentDidMount() {
