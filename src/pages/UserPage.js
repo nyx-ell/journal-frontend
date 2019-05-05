@@ -6,6 +6,7 @@ import JournalTable from '../containers/JournalTable.js';
 class UserPage extends React.Component {
     componentDidMount() {
         const token = localStorage.getItem('token')
+        console.log(token)
         axios({
             method: 'get',
             url: 'https://journal-nyx.herokuapp.com/api/v1/journals/',
@@ -17,6 +18,7 @@ class UserPage extends React.Component {
                 user_id: localStorage.getItem('userId'),
             }
         }).then(response => {
+            console.log(response)
             if (response.data.status === "success") {
                 this.setState({
                     journals: response.data.journals
