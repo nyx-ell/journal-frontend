@@ -51,9 +51,11 @@ export default class JournalEntry extends React.Component {
                 Authorization: `Bearer ${token}`
             }
         }).then(response => {
-            console.log(response)
             if (response.data.status === "success") {
                 console.log('Journal updated successfully')
+                if (response.data.redirect) {
+                    window.location.href = response.data.redirect;
+                }
             } else {
                 console.log('Could not update journal entry.');
             }
@@ -76,6 +78,9 @@ export default class JournalEntry extends React.Component {
         }).then(response => {
             if (response.data.status === "success") {
                 console.log('Journal deleted successfully')
+                if (response.data.redirect) {
+                    window.location.href = response.data.redirect;
+                }
             } else {
                 console.log('Could not delete journal entry.');
             }
@@ -96,7 +101,6 @@ export default class JournalEntry extends React.Component {
                 Authorization: `Bearer ${token}`
             },
         }).then(response => {
-
             if (response.data.status === "success") {
                 this.setState({
                     id: response.data.journal.id,
