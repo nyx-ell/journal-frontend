@@ -92,8 +92,7 @@ export default class JournalEntry extends React.Component {
         axios({
             method: 'GET',
             url: `https://journal-nyx.herokuapp.com/api/v1/journals/${id}`,
-            'headers': {
-                'Content-Type': 'application/json',
+            headers: {
                 Authorization: `Bearer ${token}`
             },
         }).then(response => {
