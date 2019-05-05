@@ -9,8 +9,11 @@ class UserPage extends React.Component {
         axios({
             method: 'get',
             url: 'https://journal-nyx.herokuapp.com/api/v1/journals/',
-            data: {
+            headers: {
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
+            },
+            data: {
                 user_id: localStorage.getItem('userId'),
             }
         }).then(response => {
